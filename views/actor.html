@@ -1,0 +1,30 @@
+<div ng-controller="ActorController as actorList" data-ng-init="init()">
+    <div class="search">
+        <div class="row">
+            <div class="col-md-12">
+                <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</div>
+                <form ng-submit="submit()" class="form-horizontal">
+                    <input autofocus ng-model="search" type="text" class="form-control input-lg navbar-static-top search-field" placeholder="Search for a actor" ng-disabled="collapsed" required>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="gallery">
+        <ul>
+            <li ng-repeat="actor in actorList | filter : search">
+                <div class="image">
+                    <a ng-href="#!/actor?actor_id={{actor.id}}">
+                        <img ng-src="{{actor.url}}" class="">
+                    </a>
+                    <span class="movieName">{{actor.name}}</span>
+                </div>
+            </li>
+            <li ng-show="!actorList.length">No actors</li>
+        </ul>
+    </div>
+
+    <div style="clear:both;"></div><br />
+
+
+</div>

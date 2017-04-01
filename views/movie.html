@@ -1,0 +1,52 @@
+<div ng-controller="MovieController as movieList" data-ng-init="init()">
+    <div class="search">
+        <div class="row">
+            <div class="col-md-12">
+                <form ng-submit="submit()" class="form-horizontal">
+                    <div class="input-group">
+                        <input autofocus ng-model="search" type="text" class="form-control input-lg navbar-static-top search-field" placeholder="Search for a movie" ng-disabled="collapsed" required>
+                        <span class="input-group-btn"><button class="btn btn-default btn-lg navbar-static-top" type="submit"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></span>
+                        <span class="input-group-btn"><button class="btn btn-default btn-lg navbar-static-top collapseButton" type="button" data-toggle="collapse" data-target="#customMovie" ng-click="toggleCollapsed()">▼</button></span>
+                    </div>
+                </form>
+
+                <div id="customMovie" ng-show="collapsed===true">
+                    <form ng-submit="addMovie()">
+                        <input type="hidden" ng-model="id" />
+                        <input class="form-control input-lg" type="text" ng-model="movieName" placeholder="Movie name"/>
+                        <input class="form-control input-lg" type="text" ng-model="movieCaption" placeholder="Movie description"/>
+                        <input data-my-Directive type="file" id="file" name="file" class="hidden"/>
+                        <label for="file" class="form-control input-lg notbold" style="margin-bottom : 0px;">Movie image</label>
+                        <span class="input-group-btn"><input class="btn btn-default btn-block btn-lg" type="submit" value="{{btnName}}"></span>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</div>
+    </div>
+    <div class="gallery"">
+        <ul>
+            <li ng-repeat="movie in movieList | filter : search">
+                <div class="image">
+                    <!--<a ng-click="Lightbox.openModal(movieList | filter : search, $index)">-->
+                    <a ng-href="#!/movie?movie_id={{movie.id}}">
+                        <img ng-src="{{movie.url | emptyImage}}" class="seen_{{movie.seen}}">
+                    </a>
+                    <div class="image-buttons top-left box" ng-click="setCollapsedTrue();editMovie(movie);">
+                        <div class="rectangle"><i class="fa fa-pencil-square-o fa-stack-1x"></i></div>
+                    </div>
+                    <div class="image-buttons top-center box" ng-click="setMovieSeen(movie);">
+                        <div class="rectangle"><i class="fa fa-stack-1x" ng-class="movie.seen == 0 ? 'fa-eye' : 'fa-eye-slash'"></i></div>
+                    </div>
+                    <div class="image-buttons top-right box" ng-click="deleteMovie(movie);">
+                        <div class="rectangle"><i class="fa fa-trash fa-stack-1x"></i></div>
+                    </div>
+                    <span class="movieName">{{movie.name}}</span>
+                </div>
+            </li>
+            <li ng-show="!movieList.length">No movies</li>
+        </ul>
+    </div>
+
+    <div style="clear:both;"></div><br />
+</div>

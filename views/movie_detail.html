@@ -1,0 +1,20 @@
+<div ng-controller="MovieController"  data-ng-init="initMovie()">
+    <div class="container center">
+        <div class="col-sm-6">
+            <img ng-src="{{movie.url}}" class="seen_{{movie.seen}} img-responsive">
+        </div>
+        <div class="col-sm-6">
+            <h1>Movie name</h1>
+            {{movie.name}}
+            <h1>Movie Description</h1>
+            {{movie.caption}}
+            <h1>Actors</h1>
+            <div data-ng-init="initActorsOfUser()">
+                <div ng-repeat="actor in actorList">
+                    <li><a ng-href="#!/actor?actor_id={{actor.id}}">{{actor.name}}</a></li>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

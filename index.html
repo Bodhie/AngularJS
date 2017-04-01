@@ -1,0 +1,91 @@
+<!doctype html>
+<html ng-app="movieApp">
+<head>
+    <title>Movie Gallery</title>
+    <!-- AngularJS
+      ================================================== -->
+    <script src="js/angular.js"></script>
+    <script src="js/angular-route.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/controllers/ActorController.js"></script>
+    <script src="scripts/controllers/MovieController.js"></script>
+    <script src="scripts/controllers/AuthController.js"></script>
+    <script src="scripts/controllers/MainController.js"></script>
+    <script src="scripts/factories/AuthFactory.js"></script>
+    <script src="scripts/factories/MovieFactory.js"></script>
+    <script src="scripts/services/session.js"></script>
+    <script src="scripts/filters/emptyfilter.js"></script>
+
+    <!-- jQuery
+      ================================================== -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+
+    <!-- Bootstrap
+      ================================================== -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/ui-bootstrap.js"></script>
+
+    <!-- Gallery
+      ================================================== -->
+    <link rel="stylesheet" href="css/angular-bootstrap-lightbox.css">
+    <script src="js/angular-bootstrap-lightbox.js"></script>
+
+    <!-- Custom
+      ================================================== -->
+    <link rel="stylesheet" href="css/style.css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body ng-controller="MainController">
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top" style="margin-bottom : 0px;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#!/">Your MovieList</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="home" ng-class="{active: tab == 'home'}"><a href="#!/">Home</a></li>
+                    <li class="movie" ng-class="{active: tab == 'movie'}"><a href="#!/movies">Movies</a></li>
+                    <li class="actor" ng-class="{active: tab == 'actor'}"><a href="#!/actors">Actors</a></li>
+
+                </ul>
+
+
+                <div ng-if="currentUser == null" class="nav navbar-form navbar-right">
+                    <form name="form" ng-submit="submit()" role="form">
+                    <div class="form-inline" >
+                        <div class="form-group ">
+                            <input type="text" name="username" id="username" class="form-control" ng-model="credentials.username" placeholder="username" required />
+                            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+                        </div>
+                        <div class="form-group ">
+                            <input type="password" name="password" id="password" class="form-control" ng-model="credentials.password" placeholder="password" required />
+                            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                        </div>
+                        <div class="form-group ">
+                            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary" id="form-submit"><i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                            <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                            <a href="#!/register" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div ng-if="currentUser" class="nav navbar-form navbar-right current_user">
+                    Welcome, {{ currentUser.username }} <a href="#!/login" ng-click="logout()" class="btn btn-primary"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                </div>
+
+
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+    <div ng-view></div>
+</body>
+</html>

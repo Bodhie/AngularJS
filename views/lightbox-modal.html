@@ -1,0 +1,25 @@
+
+<div class="modal-body"
+     ng-swipe-left="Lightbox.nextImage()"
+     ng-swipe-right="Lightbox.prevImage()">
+
+    <!-- image -->
+    <div class="lightbox-image-container">
+        <img lightbox-src="{{Lightbox.imageUrl}}">
+        <div class="image-buttons top-left box" ng-click="editMovie(movie);">
+            <div class="rectangle"><i class="fa fa-pencil-square-o fa-stack-1x" ></i></div>
+        </div>
+        <div class="image-buttons top-center box" ng-click="setMovieSeen(movie);">
+            <div class="rectangle"><i class="fa fa-stack-1x" ng-class="movie.seen == 0 ? 'fa-eye' : 'fa-eye-slash'"></i></div>
+        </div>
+        <div class="image-buttons top-right box" ng-click="deleteMovie(movie);">
+            <div class="rectangle"><i class="fa fa-trash fa-stack-1x"></i></div>
+        </div>
+    </div>
+
+    <!-- caption -->
+    <div class="alert alert-info" style="margin: 1em 0 0;">
+        {{Lightbox.imageCaption}}
+    </div>
+
+</div>

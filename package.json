@@ -1,0 +1,19 @@
+{
+  "name": "angularjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "prestart": "npm install",
+    "test": "karma start test/karma.conf.js",
+    "postinstall": "bower install",
+    "start": "http-server . -a localhost -p 8080 -c-1"
+  },
+  "author": "Stefan Bode",
+  "license": "ISC"
+}
