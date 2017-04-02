@@ -4,7 +4,6 @@ app.controller('AuthController', function($scope, $http, $window, Auth) {
     $scope.error = false;
     $scope.alerts = [];
 
-    //when the form is submitted
     $scope.submit = function() {
         $scope.submitted = true;
         if (!$scope.loginForm.$invalid) {
@@ -15,11 +14,9 @@ app.controller('AuthController', function($scope, $http, $window, Auth) {
         }
     };
 
-    //Performs the login function, by sending a request to the server with the Auth service
     $scope.login = function(credentials) {
         $scope.error = false;
         Auth.login(credentials, function(user) {
-            //success function
             $window.location.href = '#!/';
         }, function(err) {
             console.log("error");

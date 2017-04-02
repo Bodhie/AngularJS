@@ -11,14 +11,14 @@ describe("Filter: emptyFilter", function() {
     });
 
     it("should display image not found", function() {
-        var input = ""; //13 chars
+        var input = "";
         var output = "img/noimage.png";
 
         expect(filter(input)).toBe(output);
     });
 
     it("should display image not found for image N/A", function() {
-        var input = "N/A"; //13 chars
+        var input = "N/A";
         var output = "img/noimage.png";
 
         expect(filter(input)).toBe(output);

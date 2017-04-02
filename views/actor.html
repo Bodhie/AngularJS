@@ -15,7 +15,7 @@
             <li ng-repeat="actor in actorList | filter : search">
                 <div class="image">
                     <a ng-href="#!/actor?actor_id={{actor.id}}">
-                        <img ng-src="{{actor.url}}" class="">
+                        <img ng-src="{{actor.name | genderFilter}}" class="img-responsive">
                     </a>
                     <span class="movieName">{{actor.name}}</span>
                 </div>

@@ -12,7 +12,6 @@ angular.module('movieApp').controller("ActorController", function($scope,$route,
     $scope.initActor = function() {
         $http.get("https://stefanbode.nl/AngularJS/database/selectActor.php", {params:{'actor_id': $routeParams.actor_id}})
         .then(function(response) {
-            console.log(response);
             $scope.actor = response.data;
         });
     }

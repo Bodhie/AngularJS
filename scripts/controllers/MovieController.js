@@ -45,34 +45,29 @@ app.controller("MovieController", function($scope,$rootScope,$route,Lightbox,$ht
         $scope.error = false;
         $http.get('https://www.omdbapi.com/?t=' + $scope.search + '&y=&plot=full&r=json')
             .then(function (success){
-                console.log(success);
                 var movie = success.data;
 
                 if(movie.Response != "False") {
                     $http.post("https://stefanbode.nl/AngularJS/database/insertMovie.php", {'name': movie.Title, 'caption': movie.Plot, 'url': movie.Poster, 'btnName': 'Insert','user_id': user_id}).then(function (success) {
-                            var actors = movie.Actors.split(', ');
-                            console.log(actors);
-                            console.log(success.data);
+                        var actors = movie.Actors.split(', ');
+                        var x = 0;
+                        var loopArray = function(arr) {
+                            $http.post("database/insertActor.php", {
+                                'movie_id': success.data,
+                                'actor_name': arr[x]
+                            }).then(function (success) {
+                                $scope.alerts.push({msg: "Actor " + arr[x] + " added"});
+                                x++;
+                                if(x < arr.length) {
+                                    loopArray(arr);
+                                }
+                            })
+                        }
+                        loopArray(actors);
 
-                            // for (var i = 0; i < actors.length; i++) {
-                            var x = 0;
-                            var loopArray = function(arr) {
-                                $http.post("database/insertActor.php", {
-                                    'movie_id': success.data,
-                                    'actor_name': arr[x]
-                                }).then(function (success) {
-                                    $scope.alerts.push({msg: "Actor " + arr[x] + " added"});
-                                    x++;
-                                    if(x < arr.length) {
-                                        loopArray(arr);
-                                    }
-                                })
-                            }
-                            loopArray(actors);
-
-                            $scope.alerts.push({msg: "Movie added"});
-                            $scope.init();
-                        })
+                        $scope.alerts.push({msg: "Movie added"});
+                        $scope.init();
+                    })
                 } else {
                     $scope.alerts.push({msg: "Movie not found"});
                 }
@@ -83,7 +78,6 @@ app.controller("MovieController", function($scope,$rootScope,$route,Lightbox,$ht
 
     // ADD MOVIES
     $scope.addMovie = function() {
-        // Upload file
         var file = document.getElementById('file').files[0];
 
         var data = new FormData();
@@ -94,7 +88,6 @@ app.controller("MovieController", function($scope,$rootScope,$route,Lightbox,$ht
             data: data,
             headers: {'Content-Type': undefined}
         }).then(function (response) {
-            // Insert into database
             $http.post("https://stefanbode.nl/AngularJS/database/insertMovie.php", {'id': $scope.id,'name': $scope.movieName,'caption': $scope.movieCaption,'url': JSON.parse(response.data),'btnName': $scope.btnName,'user_id': user_id})
                 .then(function () {
                     $scope.alerts.push({msg: "Movie added"});
@@ -135,7 +128,6 @@ app.controller("MovieController", function($scope,$rootScope,$route,Lightbox,$ht
             })
     }
 
-    //  LIGHTBOX
     $scope.openLightboxModal = function (index) {
         Lightbox.openModal($scope.movieList, index);
     };

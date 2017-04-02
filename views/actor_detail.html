@@ -1,7 +1,7 @@
 <div ng-controller="ActorController"  data-ng-init="initActor()">
     <div class="container center">
         <div class="col-sm-6">
-            <img ng-src="{{actor.url}}" class="img-responsive">
+            <img ng-src="{{actor.name | genderFilter}}" class="img-responsive">
         </div>
         <div class="col-sm-6">
             <h1>Movie name</h1>
